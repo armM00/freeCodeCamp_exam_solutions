@@ -1,0 +1,47 @@
+def arithmetic_arranger(list_nums, bools):
+    splitted = []
+    if bools:
+        for string_pair in list_nums:
+            splitted_pairs = string_pair.split()
+            splitted.append(splitted_pairs)
+        list_nums.clear()
+    
+        first_line_list = []
+        second_line_list = []
+        third_line_list = []
+    
+        for containers in splitted:
+            num1 = containers[0]
+            operation = containers[1]
+            num2 = containers[2]
+    
+            num1_len = len(num1)
+            num2_len = len(num2)
+    
+            longest = num1_len if num1_len > num2_len else num2_len
+    
+            dashes_len = longest + 2
+            dashes = dashes_len * '-'
+    
+            spaces_first_line = (dashes_len - num1_len) * " "
+            spaces_second_line = (dashes_len - 1 - int(num2_len)) * " "
+    
+            first_line_list.append(spaces_first_line)
+            first_line_list.append(num1)
+            first_line_list.append("    ")
+    
+            second_line_list.append(operation)
+            second_line_list.append(spaces_second_line)
+            second_line_list.append(num2)
+            second_line_list.append("    ")
+    
+            third_line_list.append(dashes)
+            third_line_list.append("    ")
+    
+        f = "".join(first_line_list) + '\n'
+        s = "".join(second_line_list) + '\n'
+        t = "".join(third_line_list)
+    
+        arranged_problems = f + s + t
+        return arranged_problems
+    
