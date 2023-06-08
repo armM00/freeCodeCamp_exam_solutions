@@ -1,0 +1,77 @@
+"""
+add_time("3:00 PM", "3:10")
+# Returns: 6:10 PM
+
+"""
+
+
+class Time:
+    def __init__(self, minutes, hours, midnight, day=None):
+        self.minutes = minutes
+        self.hours = hours
+        self.midnight = midnight
+        self.midnight_index = 0
+        self.day = day
+
+        def dayz():
+            the_hours = hours
+            the_day = day.lower()
+            if hours > 12:
+                days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+                if the_day in days:
+                    index = days.index(the_day)
+                    while the_hours >= 12:
+                        the_hours -= 12
+                        try:
+                            index += 1
+                        except IndexError:
+                            index = 0
+                            continue
+                    self.day = days[index].title()
+            else:
+                m = day.lower()
+                self.day = m.title()
+
+        if self.minutes > 60:
+            while self.minutes >= 60:
+                self.minutes -= 60
+                self.hours += 1
+        if self.hours > 12:
+            while self.hours >= 12:
+                self.hours -= 12
+                self.midnight_index += 1
+
+        if self.midnight_index % 2 == 0:
+            self.midnight = self.midnight
+        else:
+            if self.midnight == "AM":
+                self.midnight = "PM"
+            else:
+                self.midnight = "AM"
+
+        if day:
+            dayz()
+
+
+def add_time(string1, string2, day=None):
+    container = string1.split()
+    start = container[0]
+    start_hour = "".join(start)
+    container2 = start_hour.split(":")
+    hour = container2[0]
+    minute = container2[1]
+
+    midnight = container[1]
+
+    container3 = string2.split(":")
+    hour_difference = container3[0]
+    minute_difference = container3[1]
+
+    hour_to_go = int(hour) + int(hour_difference)
+    minute_to_go = int(minute) + int(minute_difference)
+    result = Time(minute_to_go, hour_to_go, midnight, day)
+    return f"{result.hours}:{result.minutes:02d} {result.midnight}, {result.day}"
+
+
+x = add_time("11:43 PM", "24:20", "tueSday")
+print(x)
